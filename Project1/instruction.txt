@@ -1,0 +1,15 @@
+პროექტის აღწერილობა
+------------------------
+პროექტი შედგება შემდეგი ფოლდერები:
+- Back: პროექტის ძირითადი ლოგიკა და API
+    Node.js, Express, MongoDB 
+    Modular Architecture (Feature-Based)
+
+- Front: მომხმარებლის ინტერფეისი
+    HTML, CSS, JavaScript
+
+პროექტის გასაშვებად შედით Back ფოლდერში და გაუშვით პროექტი npm run start
+
+http://localhost:5000/login.html
+Email: test@test.com
+Password: password123
