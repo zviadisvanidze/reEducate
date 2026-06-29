@@ -1,39 +1,74 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>finance — Login</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
-</head>
-<body>
-
-<div class="auth is-active" id="page-login">
-  <div class="auth__wrap">
-    <div class="auth__promo">
-      <div class="logo">finance</div>
-      <div class="auth__illus"><span>illustration</span></div>
-      <h2>Keep track of your money and save for your future</h2>
-      <p>Personal finance app puts you in control of your spending. Track transactions, set budgets, and add to savings pots easily.</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>finance — Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="auth is-active" id="page-login">
+      <div class="auth__wrap">
+        <div class="auth__promo">
+          <div class="logo">finance</div>
+          <h2>Keep track of your money and save for your future</h2>
+          <p>
+            Personal finance app puts you in control of your spending. Track
+            transactions, set budgets, and add to savings pots easily.
+          </p>
+        </div>
+        <div class="auth__form">
+          <h1>Login</h1>
+          <form id="login-form">
+            <div class="field">
+              <label>Email</label><input type="email" name="email" />
+            </div>
+            <div class="field field--pw">
+              <label>Password</label
+              ><input type="password" name="password" /><button
+                type="button"
+                class="pw-toggle"
+                data-pw
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+              </button>
+            </div>
+            <div id="login-error" class="form-error"></div>
+            <button
+              type="submit"
+              class="btn btn--dark btn--block"
+              style="margin-top: 24px"
+            >
+              Login
+            </button>
+          </form>
+          <div class="auth__switch">
+            Need to create an account?<a href="signup.html" class="auth__link"
+              >Sign Up</a
+            >
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="auth__form">
-      <h1>Login</h1>
-      <form id="login-form">
-        <div class="field"><label>Email</label><input type="email" name="email"></div>
-        <div class="field field--pw"><label>Password</label><input type="password" name="password"><button type="button" class="pw-toggle" data-pw><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></div>
-        <div id="login-error" class="form-error"></div>
-        <button type="submit" class="btn btn--dark btn--block" style="margin-top:24px">Login</button>
-      </form>
-      <div class="auth__switch">Need to create an account?<a href="signup.html" class="auth__link">Sign Up</a></div>
-    </div>
-  </div>
-</div>
 
-<script src="api.js"></script>
-<script src="app.js"></script>
-<script src="login-page.js"></script>
-</body>
+    <script src="api.js"></script>
+    <script src="app.js"></script>
+    <script src="login-page.js"></script>
+  </body>
 </html>
