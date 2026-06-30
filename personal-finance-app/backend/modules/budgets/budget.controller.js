@@ -1,57 +1,9 @@
-const Budget = require("./budget.model");
-const Transaction = require("../transactions/transaction.model");
+const budgetService = require("./budget.service");
 
 const getBudgets = async (req, res) => {
   try {
-    const budgets = await Budget.find({ userId: req.userId });
-
-    const now = new Date();
-    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-    const endOfMonth = new Date(
-      now.getFullYear(),
-      now.getMonth() + 1,
-      0,
-      23,
-      59,
-      59,
-    );
-
-    const budgetsWithSpent = await Promise.all(
-      budgets.map(async (budget) => {
-        const transactions = await Transaction.find({
-          userId: req.userId,
-          category: budget.category,
-          amount: { $lt: 0 },
-          date: { $gte: startOfMonth, $lte: endOfMonth },
-        });
-
-        const spent = transactions.reduce(
-          (sum, t) => sum + Math.abs(t.amount),
-          0,
-        );
-
-        const latestSpending = await Transaction.find({
-          userId: req.userId,
-          category: budget.category,
-          amount: { $lt: 0 },
-        })
-          .sort({ date: -1 })
-          .limit(3);
-
-        return {
-          _id: budget._id,
-          category: budget.category,
-          maximum: budget.maximum,
-          theme: budget.theme,
-          spent: Math.round(spent * 100) / 100,
-          remaining:
-            Math.round(Math.max(budget.maximum - spent, 0) * 100) / 100,
-          latestSpending,
-        };
-      }),
-    );
-
-    res.json(budgetsWithSpent);
+    const budgets = await budgetService.getBudgets(req.userId);
+    res.json(budgets);
   } catch (err) {
     res.status(500).json({ message: "სერვერის შეცდომა" });
   }
@@ -67,7 +19,7 @@ const createBudget = async (req, res) => {
         .json({ message: "სავალდებულო ველები: category, maximum, theme" });
     }
 
-    const budget = await Budget.create({
+    const budget = await budgetService.createBudget({
       userId: req.userId,
       category,
       maximum,
@@ -84,11 +36,13 @@ const updateBudget = async (req, res) => {
   try {
     const { category, maximum, theme } = req.body;
 
-    const budget = await Budget.findOneAndUpdate(
-      { _id: req.params.id, userId: req.userId },
-      { category, maximum, theme },
-      { new: true },
-    );
+    const budget = await budgetService.updateBudget({
+      userId: req.userId,
+      id: req.params.id,
+      category,
+      maximum,
+      theme,
+    });
 
     if (!budget) {
       return res.status(404).json({ message: "ბიუჯეტი ვერ მოიძებნა" });
@@ -102,9 +56,9 @@ const updateBudget = async (req, res) => {
 
 const deleteBudget = async (req, res) => {
   try {
-    const budget = await Budget.findOneAndDelete({
-      _id: req.params.id,
+    const budget = await budgetService.deleteBudget({
       userId: req.userId,
+      id: req.params.id,
     });
 
     if (!budget) {

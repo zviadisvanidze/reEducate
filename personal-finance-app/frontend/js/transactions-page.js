@@ -12,8 +12,11 @@ document.addEventListener("DOMContentLoaded", function () {
       if (!data) return;
       var html = "";
       data.transactions.forEach(function (t) {
-        var pos = t.amount > 0 ? " tx-amt--pos" : "";
-        var sign = t.amount > 0 ? "+" : "";
+        var amount = t.displayAmount !== undefined ? t.displayAmount : t.amount;
+
+        var pos = amount > 0 ? " tx-amt--pos" : "";
+        var sign = amount > 0 ? "+" : "-";
+
         var d = new Date(t.date);
         var dateStr =
           d.getDate() +
@@ -34,6 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
           ][d.getMonth()] +
           " " +
           d.getFullYear();
+
         html +=
           '<div class="table-row">' +
           '<div class="table-row__who"><span class="avatar" style="background:var(' +
@@ -55,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
           pos +
           '">' +
           sign +
-          fmt(Math.abs(t.amount)) +
+          fmt(Math.abs(amount)) +
           '</div><div class="tx-date">' +
           dateStr +
           "</div></div>" +
@@ -77,6 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       pagHtml += '</div><button class="page-btn" data-p="next">Next ›</button>';
       paginationEl.innerHTML = pagHtml;
+      paginationEl.dataset.totalPages = data.totalPages;
     });
   }
 
@@ -112,8 +117,12 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!btn) return;
     var p = btn.dataset.p;
     if (p === "prev" && state.page > 1) state.page--;
-    else if (p === "next") state.page++;
-    else state.page = Number(p);
+    else if (
+      p === "next" &&
+      state.page < Number(paginationEl.dataset.totalPages)
+    ) {
+      state.page++;
+    } else state.page = Number(p);
     load();
   });
 

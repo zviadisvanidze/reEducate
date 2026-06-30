@@ -57,6 +57,12 @@ const login = async (req, res) => {
   }
 };
 
+const logout = async (req, res) => {
+  await authService.logout();
+
+  res.json({ message: "User logged out successfully" });
+};
+
 const currentUser = async (req, res) => {
   const user = await authService.currentUser(req.userId);
 
@@ -67,4 +73,4 @@ const currentUser = async (req, res) => {
   res.json(user);
 };
 
-module.exports = { signup, login, currentUser };
+module.exports = { signup, login, logout, currentUser };

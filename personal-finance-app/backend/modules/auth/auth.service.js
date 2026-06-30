@@ -29,7 +29,7 @@ exports.signIn = async ({ email, password }) => {
     userId: user._id,
   };
 
-  const accessToken = await jwt.sign(payLoad, process.env.JWT_SECRET, {
+  const accessToken = await jwt.sign(payLoad, process.env.JWT_SECRET || process.env.SESSION_SECRET, {
     expiresIn: "1h",
   });
 
@@ -40,3 +40,5 @@ exports.currentUser = async (userId) => {
   const existsUser = await userModel.findById(userId);
   return existsUser;
 };
+
+exports.logout = async () => true;

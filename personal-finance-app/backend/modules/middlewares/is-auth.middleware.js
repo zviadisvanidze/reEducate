@@ -14,10 +14,11 @@ module.exports = async (req, res, next) => {
       return res.status(401).json({ message: "permition denied" });
     }
 
-    const payload = await jwt.verify(token, process.env.JWT_SECRET);
+    const payload = await jwt.verify(token, process.env.JWT_SECRET || process.env.SESSION_SECRET);
     req["userId"] = payload.userId;
     next();
   } catch (e) {
     return res.status(401).json({ message: "permition denied" });
   }
 };
+

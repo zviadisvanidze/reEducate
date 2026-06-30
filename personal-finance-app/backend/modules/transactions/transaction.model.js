@@ -1,30 +1,33 @@
 const mongoose = require("mongoose");
 
 const transactionSchema = new mongoose.Schema({
-  userId: {
+  senderId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
-  name: {
-    type: String,
+
+  receiverId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
     required: true,
   },
+
   category: {
     type: String,
     required: true,
   },
+
   date: {
     type: Date,
-    required: true,
+    default: Date.now,
   },
+
   amount: {
     type: Number,
     required: true,
   },
-  avatar: {
-    type: String,
-  },
+
   color: {
     type: String,
   },

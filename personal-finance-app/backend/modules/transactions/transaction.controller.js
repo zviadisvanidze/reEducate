@@ -1,81 +1,58 @@
-const Transaction = require('./transaction.model');
+const transactionService = require("./transaction.service");
 
 const getTransactions = async (req, res) => {
   try {
-    const { page = 1, limit = 10, search, category, sort = 'latest' } = req.query;
-
-    const filter = { userId: req.userId };
-
-    if (search) {
-      filter.name = { $regex: search, $options: 'i' };
-    }
-
-    if (category && category !== 'All Transactions') {
-      filter.category = category;
-    }
-
-    let sortOption = {};
-    switch (sort) {
-      case 'oldest':
-        sortOption = { date: 1 };
-        break;
-      case 'a-z':
-        sortOption = { name: 1 };
-        break;
-      case 'z-a':
-        sortOption = { name: -1 };
-        break;
-      case 'highest':
-        sortOption = { amount: -1 };
-        break;
-      case 'lowest':
-        sortOption = { amount: 1 };
-        break;
-      default:
-        sortOption = { date: -1 };
-    }
-
-    const skip = (Number(page) - 1) * Number(limit);
-
-    const transactions = await Transaction.find(filter)
-      .sort(sortOption)
-      .skip(skip)
-      .limit(Number(limit));
-
-    const total = await Transaction.countDocuments(filter);
-
-    res.json({
-      transactions,
-      currentPage: Number(page),
-      totalPages: Math.ceil(total / Number(limit)),
-      total
+    const result = await transactionService.getTransactions({
+      userId: req.userId,
+      query: req.query,
     });
+
+    res.json(result);
   } catch (err) {
-    res.status(500).json({ message: 'სერვერის შეცდომა' });
+    res.status(500).json({ message: "Server error" });
   }
 };
 
 const createTransaction = async (req, res) => {
   try {
-    const { name, category, date, amount, avatar, color } = req.body;
-
-    if (!name || !category || !date || amount === undefined) {
-      return res.status(400).json({ message: 'სავალდებულო ველები: name, category, date, amount' });
-    }
-
-    const transaction = await Transaction.create({
-      userId: req.userId,
-      name,
-      category,
-      date,
-      amount,
-      avatar,
-      color
+    const result = await transactionService.createTransaction({
+      senderId: req.userId,
+      ...req.body,
     });
 
-    res.status(201).json(transaction);
+    if (result === "MISSING_FIELDS") {
+      return res.status(400).json({
+        message: "Required fields: receiverId, category, amount",
+      });
+    }
+
+    if (result === "INVALID_RECEIVER") {
+      return res.status(400).json({ message: "Invalid receiverId" });
+    }
+
+    if (result === "SELF_TRANSFER") {
+      return res.status(400).json({ message: "You cannot send money to yourself" });
+    }
+
+    if (result === "INVALID_AMOUNT") {
+      return res.status(400).json({ message: "Amount must be greater than 0" });
+    }
+
+    if (result === "SENDER_NOT_FOUND") {
+      return res.status(404).json({ message: "Sender not found" });
+    }
+
+    if (result === "RECEIVER_NOT_FOUND") {
+      return res.status(404).json({ message: "Receiver not found" });
+    }
+
+    if (result === "INSUFFICIENT_BALANCE") {
+      return res.status(400).json({ message: "Insufficient balance" });
+    }
+
+    res.status(201).json(result);
   } catch (err) {
-    res.status(500).json({ message: 'სერვერის შეცდომა' });
+    res.status(500).json({ message: "სერვერის შეცდომა" });
   }
 };
 

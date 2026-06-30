@@ -58,8 +58,13 @@ function apiDelete(url) {
 }
 
 function logout() {
-  localStorage.removeItem('accessToken');
-  window.location.href = 'login.html';
+  fetch(API + '/auth/logout', {
+    method: 'POST',
+    headers: authHeaders()
+  }).finally(function () {
+    localStorage.removeItem('accessToken');
+    window.location.href = 'login.html';
+  });
 }
 
 function fmt(n) {
