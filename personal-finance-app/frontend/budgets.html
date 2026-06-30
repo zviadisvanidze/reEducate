@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>finance — Budgets</title>
+    <title>Budgets</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -254,19 +254,71 @@
     </div>
 
     <div class="modal-overlay" id="modal-edit-budget" data-overlay>
-  <div class="modal">
-    <div class="modal__head"><h2>Edit Budget</h2><button class="modal__close" data-close><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg></button></div>
-    <p class="modal__desc">As your budgets change, feel free to update your spending limits.</p>
-    <label>Budget Category</label>
-    <select name="category"><option>Entertainment</option><option>Bills</option><option>Dining Out</option><option>Personal Care</option><option>Transportation</option><option>Education</option><option>Lifestyle</option><option>Shopping</option><option>General</option><option>Groceries</option></select>
-    <label>Maximum Spend</label>
-    <div class="money-input"><span class="dollar">$</span><input class="input" name="maximum" placeholder="e.g. 2000"></div>
-    <label>Theme</label>
-    <select name="theme"><option>Green</option><option>Cyan</option><option>Yellow</option><option>Navy</option><option>Red</option><option>Purple</option><option>Turquoise</option><option>Brown</option><option>Magenta</option><option>Blue</option><option>Army Green</option><option>Gold</option><option>Orange</option></select>
-    <button class="btn btn--dark btn--block" id="btn-edit-budget" data-close style="margin-top:8px">Save Changes</button>
-  </div>
-</div>
-<div class="modal-overlay" id="modal-delete-budget" data-overlay>
+      <div class="modal">
+        <div class="modal__head">
+          <h2>Edit Budget</h2>
+          <button class="modal__close" data-close>
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="m15 9-6 6M9 9l6 6" />
+            </svg>
+          </button>
+        </div>
+        <p class="modal__desc">
+          As your budgets change, feel free to update your spending limits.
+        </p>
+        <label>Budget Category</label>
+        <select name="category">
+          <option>Entertainment</option>
+          <option>Bills</option>
+          <option>Dining Out</option>
+          <option>Personal Care</option>
+          <option>Transportation</option>
+          <option>Education</option>
+          <option>Lifestyle</option>
+          <option>Shopping</option>
+          <option>General</option>
+          <option>Groceries</option>
+        </select>
+        <label>Maximum Spend</label>
+        <div class="money-input">
+          <span class="dollar">$</span
+          ><input class="input" name="maximum" placeholder="e.g. 2000" />
+        </div>
+        <label>Theme</label>
+        <select name="theme">
+          <option>Green</option>
+          <option>Cyan</option>
+          <option>Yellow</option>
+          <option>Navy</option>
+          <option>Red</option>
+          <option>Purple</option>
+          <option>Turquoise</option>
+          <option>Brown</option>
+          <option>Magenta</option>
+          <option>Blue</option>
+          <option>Army Green</option>
+          <option>Gold</option>
+          <option>Orange</option>
+        </select>
+        <button
+          class="btn btn--dark btn--block"
+          id="btn-edit-budget"
+          data-close
+          style="margin-top: 8px"
+        >
+          Save Changes
+        </button>
+      </div>
+    </div>
+    <div class="modal-overlay" id="modal-delete-budget" data-overlay>
       <div class="modal">
         <div class="modal__head">
           <h2 data-del-title>Delete 'Entertainment'?</h2>
@@ -304,4 +356,3 @@
     <script src="js/budgets-page.js"></script>
   </body>
 </html>
-

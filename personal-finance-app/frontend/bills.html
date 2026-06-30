@@ -1,104 +1,238 @@
-﻿<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>finance — Recurring Bills</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-
-<div class="app" id="app">
-
-  <!-- SIDEBAR (desktop) -->
-  <aside class="sidebar">
-    <div class="sidebar__logo">finance</div>
-    <nav class="sidebar__nav">
-      <a class="nav-item" href="overview.html">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.3 2.3a1 1 0 0 1 1.4 0l8 7.5a1 1 0 0 1 .3.7V20a2 2 0 0 1-2 2h-3.5v-6.5h-3V22H6a2 2 0 0 1-2-2v-9.5a1 1 0 0 1 .3-.7z"/></svg>
-        <span>Overview</span>
-      </a>
-      <a class="nav-item" href="transactions.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v15m0 0-3.5-3.5M7 19l3.5-3.5M17 20V5m0 0-3.5 3.5M17 5l3.5 3.5"/></svg>
-        <span>Transactions</span>
-      </a>
-      <a class="nav-item" href="budgets.html">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10h-10z"/><path d="M11 2.05A10 10 0 0 0 2.05 11H11z" opacity=".5"/></svg>
-        <span>Budgets</span>
-      </a>
-      <a class="nav-item" href="pots.html">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h12v3.5H6z" opacity=".5"/><path d="M4.5 8h15l-1.1 11.2A2 2 0 0 1 16.4 21H7.6a2 2 0 0 1-2-1.8z"/></svg>
-        <span>Pots</span>
-      </a>
-      <a class="nav-item is-active" href="bills.html">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 2h14v20l-2.5-1.8L14 22l-2-1.8L10 22l-2.5-1.8L5 22z"/></svg>
-        <span>Recurring bills</span>
-      </a>
-    </nav>
-    <div class="sidebar__footer">
-      <a href="#" class="sidebar__link" data-logout>
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
-        <span>Log out</span>
-      </a>
-      <button class="minimize-btn">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6 9 12l6 6"/></svg>
-        <span>Minimize Menu</span>
-      </button>
-    </div>
-  </aside>
-
-  <!-- MAIN -->
-  <main class="main">
-    <section class="page is-active" id="page-bills">
-      <div class="topbar">
-        <h1 class="page-title">Recurring Bills</h1>
-        <div class="topbar__actions"><a href="#" class="logout-top" data-logout>Log out</a></div>
-      </div>
-      <div class="bills-grid">
-        <div class="stack">
-          <div class="total-bills">
-            <span class="total-bills__icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="#fff"><path d="M5 2h14v20l-2.5-1.8L14 22l-2-1.8L10 22l-2.5-1.8L5 22z"/></svg></span>
-            <div class="total-bills__label">Total Bills</div>
-            <div class="total-bills__value" id="bills-total">...</div>
-          </div>
-          <div class="card summary-card">
-            <h3>Summary</h3>
-            <div class="summary-line"><span class="summary-line__label">Paid Bills</span><span class="summary-line__val" id="bills-paid-count">...</span></div>
-            <div class="summary-line"><span class="summary-line__label">Total Upcoming</span><span class="summary-line__val" id="bills-upcoming-count">...</span></div>
-            <div class="summary-line summary-line--due"><span class="summary-line__label">Due Soon</span><span class="summary-line__val" id="bills-due-count">...</span></div>
-          </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Recurring Bills</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="app" id="app">
+      <!-- SIDEBAR (desktop) -->
+      <aside class="sidebar">
+        <div class="sidebar__logo">finance</div>
+        <nav class="sidebar__nav">
+          <a class="nav-item" href="overview.html">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M11.3 2.3a1 1 0 0 1 1.4 0l8 7.5a1 1 0 0 1 .3.7V20a2 2 0 0 1-2 2h-3.5v-6.5h-3V22H6a2 2 0 0 1-2-2v-9.5a1 1 0 0 1 .3-.7z"
+              />
+            </svg>
+            <span>Overview</span>
+          </a>
+          <a class="nav-item" href="transactions.html">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M7 4v15m0 0-3.5-3.5M7 19l3.5-3.5M17 20V5m0 0-3.5 3.5M17 5l3.5 3.5"
+              />
+            </svg>
+            <span>Transactions</span>
+          </a>
+          <a class="nav-item" href="budgets.html">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2a10 10 0 1 0 10 10h-10z" />
+              <path d="M11 2.05A10 10 0 0 0 2.05 11H11z" opacity=".5" />
+            </svg>
+            <span>Budgets</span>
+          </a>
+          <a class="nav-item" href="pots.html">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M6 3h12v3.5H6z" opacity=".5" />
+              <path
+                d="M4.5 8h15l-1.1 11.2A2 2 0 0 1 16.4 21H7.6a2 2 0 0 1-2-1.8z"
+              />
+            </svg>
+            <span>Pots</span>
+          </a>
+          <a class="nav-item is-active" href="bills.html">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M5 2h14v20l-2.5-1.8L14 22l-2-1.8L10 22l-2.5-1.8L5 22z" />
+            </svg>
+            <span>Recurring bills</span>
+          </a>
+        </nav>
+        <div class="sidebar__footer">
+          <a href="#" class="sidebar__link" data-logout>
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"
+              />
+            </svg>
+            <span>Log out</span>
+          </a>
+          <button class="minimize-btn">
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M15 6 9 12l6 6" />
+            </svg>
+            <span>Minimize Menu</span>
+          </button>
         </div>
+      </aside>
 
-        <section class="card">
-          <div class="toolbar">
-            <div class="search"><input id="bills-search" placeholder="Search bills"><span class="search__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span></div>
-            <div class="filter"><span class="filter__label">Sort by</span><select id="bills-sort" class="filter-select"><option value="latest">Latest</option><option value="oldest">Oldest</option><option value="a-z">A to Z</option><option value="z-a">Z to A</option><option value="highest">Highest</option><option value="lowest">Lowest</option></select></div>
+      <!-- MAIN -->
+      <main class="main">
+        <section class="page is-active" id="page-bills">
+          <div class="topbar">
+            <h1 class="page-title">Recurring Bills</h1>
+            <div class="topbar__actions">
+              <a href="#" class="logout-top" data-logout>Log out</a>
+            </div>
           </div>
-          <div class="bills-head"><span>Bill Title</span><span>Due Date</span><span class="ta-right">Amount</span></div>
+          <div class="bills-grid">
+            <div class="stack">
+              <div class="total-bills">
+                <span class="total-bills__icon"
+                  ><svg width="32" height="32" viewBox="0 0 24 24" fill="#fff">
+                    <path
+                      d="M5 2h14v20l-2.5-1.8L14 22l-2-1.8L10 22l-2.5-1.8L5 22z"
+                    /></svg
+                ></span>
+                <div class="total-bills__label">Total Bills</div>
+                <div class="total-bills__value" id="bills-total">...</div>
+              </div>
+              <div class="card summary-card">
+                <h3>Summary</h3>
+                <div class="summary-line">
+                  <span class="summary-line__label">Paid Bills</span
+                  ><span class="summary-line__val" id="bills-paid-count"
+                    >...</span
+                  >
+                </div>
+                <div class="summary-line">
+                  <span class="summary-line__label">Total Upcoming</span
+                  ><span class="summary-line__val" id="bills-upcoming-count"
+                    >...</span
+                  >
+                </div>
+                <div class="summary-line summary-line--due">
+                  <span class="summary-line__label">Due Soon</span
+                  ><span class="summary-line__val" id="bills-due-count"
+                    >...</span
+                  >
+                </div>
+              </div>
+            </div>
 
-          <div id="bills-body"></div>
+            <section class="card">
+              <div class="toolbar">
+                <div class="search">
+                  <input id="bills-search" placeholder="Search bills" /><span
+                    class="search__icon"
+                    ><svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <circle cx="11" cy="11" r="7" />
+                      <path d="m21 21-4.3-4.3" /></svg
+                  ></span>
+                </div>
+                <div class="filter">
+                  <span class="filter__label">Sort by</span
+                  ><select id="bills-sort" class="filter-select">
+                    <option value="latest">Latest</option>
+                    <option value="oldest">Oldest</option>
+                    <option value="a-z">A to Z</option>
+                    <option value="z-a">Z to A</option>
+                    <option value="highest">Highest</option>
+                    <option value="lowest">Lowest</option>
+                  </select>
+                </div>
+              </div>
+              <div class="bills-head">
+                <span>Bill Title</span><span>Due Date</span
+                ><span class="ta-right">Amount</span>
+              </div>
+
+              <div id="bills-body"></div>
+            </section>
+          </div>
         </section>
-      </div>
-    </section>
-  </main>
-</div>
+      </main>
+    </div>
 
-<!-- BOTTOM NAV (tablet / mobile) -->
-<nav class="bottom-nav">
-  <a class="bottom-nav__item" href="overview.html"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.3 2.3a1 1 0 0 1 1.4 0l8 7.5a1 1 0 0 1 .3.7V20a2 2 0 0 1-2 2h-3.5v-6.5h-3V22H6a2 2 0 0 1-2-2v-9.5a1 1 0 0 1 .3-.7z"/></svg><span>Overview</span></a>
-  <a class="bottom-nav__item" href="transactions.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v15m0 0-3.5-3.5M7 19l3.5-3.5M17 20V5m0 0-3.5 3.5M17 5l3.5 3.5"/></svg><span>Transactions</span></a>
-  <a class="bottom-nav__item" href="budgets.html"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10h-10z"/><path d="M11 2.05A10 10 0 0 0 2.05 11H11z" opacity=".5"/></svg><span>Budgets</span></a>
-  <a class="bottom-nav__item" href="pots.html"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h12v3.5H6z" opacity=".5"/><path d="M4.5 8h15l-1.1 11.2A2 2 0 0 1 16.4 21H7.6a2 2 0 0 1-2-1.8z"/></svg><span>Pots</span></a>
-  <a class="bottom-nav__item is-active" href="bills.html"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 2h14v20l-2.5-1.8L14 22l-2-1.8L10 22l-2.5-1.8L5 22z"/></svg><span>Recurring</span></a>
-</nav>
+    <!-- BOTTOM NAV (tablet / mobile) -->
+    <nav class="bottom-nav">
+      <a class="bottom-nav__item" href="overview.html"
+        ><svg viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M11.3 2.3a1 1 0 0 1 1.4 0l8 7.5a1 1 0 0 1 .3.7V20a2 2 0 0 1-2 2h-3.5v-6.5h-3V22H6a2 2 0 0 1-2-2v-9.5a1 1 0 0 1 .3-.7z"
+          /></svg
+        ><span>Overview</span></a
+      >
+      <a class="bottom-nav__item" href="transactions.html"
+        ><svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path
+            d="M7 4v15m0 0-3.5-3.5M7 19l3.5-3.5M17 20V5m0 0-3.5 3.5M17 5l3.5 3.5"
+          /></svg
+        ><span>Transactions</span></a
+      >
+      <a class="bottom-nav__item" href="budgets.html"
+        ><svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2a10 10 0 1 0 10 10h-10z" />
+          <path d="M11 2.05A10 10 0 0 0 2.05 11H11z" opacity=".5" /></svg
+        ><span>Budgets</span></a
+      >
+      <a class="bottom-nav__item" href="pots.html"
+        ><svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M6 3h12v3.5H6z" opacity=".5" />
+          <path
+            d="M4.5 8h15l-1.1 11.2A2 2 0 0 1 16.4 21H7.6a2 2 0 0 1-2-1.8z"
+          /></svg
+        ><span>Pots</span></a
+      >
+      <a class="bottom-nav__item is-active" href="bills.html"
+        ><svg viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M5 2h14v20l-2.5-1.8L14 22l-2-1.8L10 22l-2.5-1.8L5 22z"
+          /></svg
+        ><span>Recurring</span></a
+      >
+    </nav>
 
-<script src="js/api.js"></script>
-<script src="js/app.js"></script>
-<script src="js/bills-page.js"></script>
-</body>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/bills-page.js"></script>
+  </body>
 </html>
-
-

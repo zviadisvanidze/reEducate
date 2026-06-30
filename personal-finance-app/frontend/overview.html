@@ -1,130 +1,298 @@
-﻿<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>finance — Overview</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-
-<div class="app" id="app">
-
-  <!-- SIDEBAR (desktop) -->
-  <aside class="sidebar">
-    <div class="sidebar__logo">finance</div>
-    <nav class="sidebar__nav">
-      <a class="nav-item is-active" href="overview.html">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.3 2.3a1 1 0 0 1 1.4 0l8 7.5a1 1 0 0 1 .3.7V20a2 2 0 0 1-2 2h-3.5v-6.5h-3V22H6a2 2 0 0 1-2-2v-9.5a1 1 0 0 1 .3-.7z"/></svg>
-        <span>Overview</span>
-      </a>
-      <a class="nav-item" href="transactions.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v15m0 0-3.5-3.5M7 19l3.5-3.5M17 20V5m0 0-3.5 3.5M17 5l3.5 3.5"/></svg>
-        <span>Transactions</span>
-      </a>
-      <a class="nav-item" href="budgets.html">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10h-10z"/><path d="M11 2.05A10 10 0 0 0 2.05 11H11z" opacity=".5"/></svg>
-        <span>Budgets</span>
-      </a>
-      <a class="nav-item" href="pots.html">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h12v3.5H6z" opacity=".5"/><path d="M4.5 8h15l-1.1 11.2A2 2 0 0 1 16.4 21H7.6a2 2 0 0 1-2-1.8z"/></svg>
-        <span>Pots</span>
-      </a>
-      <a class="nav-item" href="bills.html">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 2h14v20l-2.5-1.8L14 22l-2-1.8L10 22l-2.5-1.8L5 22z"/></svg>
-        <span>Recurring bills</span>
-      </a>
-    </nav>
-    <div class="sidebar__footer">
-      <a href="#" class="sidebar__link" data-logout>
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
-        <span>Log out</span>
-      </a>
-      <button class="minimize-btn">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6 9 12l6 6"/></svg>
-        <span>Minimize Menu</span>
-      </button>
-    </div>
-  </aside>
-
-  <!-- MAIN -->
-  <main class="main">
-    <section class="page is-active" id="page-overview">
-      <div class="topbar">
-        <h1 class="page-title">Overview</h1>
-        <div class="topbar__actions"><a href="#" class="logout-top" data-logout>Log out</a></div>
-      </div>
-
-      <div class="stack">
-        <div class="balance-row">
-          <div class="balance balance--dark"><div class="balance__label">Current Balance</div><div class="balance__value"><span id="ov-balance">...</span></div></div>
-          <div class="balance"><div class="balance__label">Income</div><div class="balance__value"><span id="ov-income">...</span></div></div>
-          <div class="balance"><div class="balance__label">Expenses</div><div class="balance__value"><span id="ov-expenses">...</span></div></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Overview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="app" id="app">
+      <!-- SIDEBAR (desktop) -->
+      <aside class="sidebar">
+        <div class="sidebar__logo">finance</div>
+        <nav class="sidebar__nav">
+          <a class="nav-item is-active" href="overview.html">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M11.3 2.3a1 1 0 0 1 1.4 0l8 7.5a1 1 0 0 1 .3.7V20a2 2 0 0 1-2 2h-3.5v-6.5h-3V22H6a2 2 0 0 1-2-2v-9.5a1 1 0 0 1 .3-.7z"
+              />
+            </svg>
+            <span>Overview</span>
+          </a>
+          <a class="nav-item" href="transactions.html">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M7 4v15m0 0-3.5-3.5M7 19l3.5-3.5M17 20V5m0 0-3.5 3.5M17 5l3.5 3.5"
+              />
+            </svg>
+            <span>Transactions</span>
+          </a>
+          <a class="nav-item" href="budgets.html">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2a10 10 0 1 0 10 10h-10z" />
+              <path d="M11 2.05A10 10 0 0 0 2.05 11H11z" opacity=".5" />
+            </svg>
+            <span>Budgets</span>
+          </a>
+          <a class="nav-item" href="pots.html">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M6 3h12v3.5H6z" opacity=".5" />
+              <path
+                d="M4.5 8h15l-1.1 11.2A2 2 0 0 1 16.4 21H7.6a2 2 0 0 1-2-1.8z"
+              />
+            </svg>
+            <span>Pots</span>
+          </a>
+          <a class="nav-item" href="bills.html">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M5 2h14v20l-2.5-1.8L14 22l-2-1.8L10 22l-2.5-1.8L5 22z" />
+            </svg>
+            <span>Recurring bills</span>
+          </a>
+        </nav>
+        <div class="sidebar__footer">
+          <a href="#" class="sidebar__link" data-logout>
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"
+              />
+            </svg>
+            <span>Log out</span>
+          </a>
+          <button class="minimize-btn">
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M15 6 9 12l6 6" />
+            </svg>
+            <span>Minimize Menu</span>
+          </button>
         </div>
+      </aside>
 
-        <div class="overview-grid">
-          <div class="overview-col">
-            <!-- Pots -->
-            <section class="card">
-              <div class="card__head"><h2 class="card__title">Pots</h2><a class="see" href="pots.html">See Details ›</a></div>
-              <div class="pots-inner">
-                <div class="pots-total">
-                  <span class="pots-total__icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 4h12M5 8h14l-1 11a2 2 0 0 1-2 1.8H8A2 2 0 0 1 6 19z"/><path d="M12 12v4M10 14h4" stroke-linecap="round"/></svg></span>
-                  <div><div class="pots-total__label">Total Saved</div><div class="pots-total__value"><span id="ov-pots-total">...</span></div></div>
+      <!-- MAIN -->
+      <main class="main">
+        <section class="page is-active" id="page-overview">
+          <div class="topbar">
+            <h1 class="page-title">Overview</h1>
+            <div class="topbar__actions">
+              <a href="#" class="logout-top" data-logout>Log out</a>
+            </div>
+          </div>
+
+          <div class="stack">
+            <div class="balance-row">
+              <div class="balance balance--dark">
+                <div class="balance__label">Current Balance</div>
+                <div class="balance__value">
+                  <span id="ov-balance">...</span>
                 </div>
-                <div class="pots-mini" id="ov-pots-list"></div>
               </div>
-            </section>
+              <div class="balance">
+                <div class="balance__label">Income</div>
+                <div class="balance__value">
+                  <span id="ov-income">...</span>
+                </div>
+              </div>
+              <div class="balance">
+                <div class="balance__label">Expenses</div>
+                <div class="balance__value">
+                  <span id="ov-expenses">...</span>
+                </div>
+              </div>
+            </div>
 
-            <!-- Transactions -->
-            <section class="card">
-              <div class="card__head"><h2 class="card__title">Transactions</h2><a class="see" href="transactions.html">View All ›</a></div>
-              <div id="ov-transactions"></div>
-            </section>
+            <div class="overview-grid">
+              <div class="overview-col">
+                <!-- Pots -->
+                <section class="card">
+                  <div class="card__head">
+                    <h2 class="card__title">Pots</h2>
+                    <a class="see" href="pots.html">See Details ›</a>
+                  </div>
+                  <div class="pots-inner">
+                    <div class="pots-total">
+                      <span class="pots-total__icon"
+                        ><svg
+                          width="40"
+                          height="40"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.6"
+                        >
+                          <path
+                            d="M6 4h12M5 8h14l-1 11a2 2 0 0 1-2 1.8H8A2 2 0 0 1 6 19z"
+                          />
+                          <path
+                            d="M12 12v4M10 14h4"
+                            stroke-linecap="round"
+                          /></svg
+                      ></span>
+                      <div>
+                        <div class="pots-total__label">Total Saved</div>
+                        <div class="pots-total__value">
+                          <span id="ov-pots-total">...</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="pots-mini" id="ov-pots-list"></div>
+                  </div>
+                </section>
+
+                <!-- Transactions -->
+                <section class="card">
+                  <div class="card__head">
+                    <h2 class="card__title">Transactions</h2>
+                    <a class="see" href="transactions.html">View All ›</a>
+                  </div>
+                  <div id="ov-transactions"></div>
+                </section>
+              </div>
+
+              <div class="overview-col">
+                <!-- Budgets -->
+                <section class="card">
+                  <div class="card__head">
+                    <h2 class="card__title">Budgets</h2>
+                    <a class="see" href="budgets.html">See Details ›</a>
+                  </div>
+                  <div class="budget-chart">
+                    <div class="donut donut-data">
+                      <div class="donut__hole">
+                        <div class="donut__value">
+                          <span id="ov-budget-spent">...</span>
+                        </div>
+                        <div class="donut__limit">
+                          <span id="ov-budget-limit">...</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="budget-legend" id="ov-budget-legend"></div>
+                  </div>
+                </section>
+
+                <!-- Recurring -->
+                <section class="card">
+                  <div class="card__head">
+                    <h2 class="card__title">Recurring Bills</h2>
+                    <a class="see" href="bills.html">See Details ›</a>
+                  </div>
+                  <div class="recurring-list">
+                    <div
+                      class="recurring-item"
+                      style="border-color: var(--green)"
+                    >
+                      <span class="recurring-item__label">Paid Bills</span
+                      ><span class="recurring-item__val"
+                        ><span id="ov-bills-paid">...</span></span
+                      >
+                    </div>
+                    <div
+                      class="recurring-item"
+                      style="border-color: var(--yellow)"
+                    >
+                      <span class="recurring-item__label">Total Upcoming</span
+                      ><span class="recurring-item__val"
+                        ><span id="ov-bills-upcoming">...</span></span
+                      >
+                    </div>
+                    <div
+                      class="recurring-item"
+                      style="border-color: var(--cyan)"
+                    >
+                      <span class="recurring-item__label">Due Soon</span
+                      ><span class="recurring-item__val"
+                        ><span id="ov-bills-due">...</span></span
+                      >
+                    </div>
+                  </div>
+                </section>
+              </div>
+            </div>
           </div>
+        </section>
+      </main>
+    </div>
 
-          <div class="overview-col">
-            <!-- Budgets -->
-            <section class="card">
-              <div class="card__head"><h2 class="card__title">Budgets</h2><a class="see" href="budgets.html">See Details ›</a></div>
-              <div class="budget-chart">
-                <div class="donut donut-data"><div class="donut__hole"><div class="donut__value"><span id="ov-budget-spent">...</span></div><div class="donut__limit"><span id="ov-budget-limit">...</span></div></div></div>
-                <div class="budget-legend" id="ov-budget-legend"></div>
-              </div>
-            </section>
+    <!-- BOTTOM NAV (tablet / mobile) -->
+    <nav class="bottom-nav">
+      <a class="bottom-nav__item is-active" href="overview.html"
+        ><svg viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M11.3 2.3a1 1 0 0 1 1.4 0l8 7.5a1 1 0 0 1 .3.7V20a2 2 0 0 1-2 2h-3.5v-6.5h-3V22H6a2 2 0 0 1-2-2v-9.5a1 1 0 0 1 .3-.7z"
+          /></svg
+        ><span>Overview</span></a
+      >
+      <a class="bottom-nav__item" href="transactions.html"
+        ><svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path
+            d="M7 4v15m0 0-3.5-3.5M7 19l3.5-3.5M17 20V5m0 0-3.5 3.5M17 5l3.5 3.5"
+          /></svg
+        ><span>Transactions</span></a
+      >
+      <a class="bottom-nav__item" href="budgets.html"
+        ><svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2a10 10 0 1 0 10 10h-10z" />
+          <path d="M11 2.05A10 10 0 0 0 2.05 11H11z" opacity=".5" /></svg
+        ><span>Budgets</span></a
+      >
+      <a class="bottom-nav__item" href="pots.html"
+        ><svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M6 3h12v3.5H6z" opacity=".5" />
+          <path
+            d="M4.5 8h15l-1.1 11.2A2 2 0 0 1 16.4 21H7.6a2 2 0 0 1-2-1.8z"
+          /></svg
+        ><span>Pots</span></a
+      >
+      <a class="bottom-nav__item" href="bills.html"
+        ><svg viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M5 2h14v20l-2.5-1.8L14 22l-2-1.8L10 22l-2.5-1.8L5 22z"
+          /></svg
+        ><span>Recurring</span></a
+      >
+    </nav>
 
-            <!-- Recurring -->
-            <section class="card">
-              <div class="card__head"><h2 class="card__title">Recurring Bills</h2><a class="see" href="bills.html">See Details ›</a></div>
-              <div class="recurring-list">
-                <div class="recurring-item" style="border-color:var(--green)"><span class="recurring-item__label">Paid Bills</span><span class="recurring-item__val"><span id="ov-bills-paid">...</span></span></div>
-                <div class="recurring-item" style="border-color:var(--yellow)"><span class="recurring-item__label">Total Upcoming</span><span class="recurring-item__val"><span id="ov-bills-upcoming">...</span></span></div>
-                <div class="recurring-item" style="border-color:var(--cyan)"><span class="recurring-item__label">Due Soon</span><span class="recurring-item__val"><span id="ov-bills-due">...</span></span></div>
-              </div>
-            </section>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-</div>
-
-<!-- BOTTOM NAV (tablet / mobile) -->
-<nav class="bottom-nav">
-  <a class="bottom-nav__item is-active" href="overview.html"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.3 2.3a1 1 0 0 1 1.4 0l8 7.5a1 1 0 0 1 .3.7V20a2 2 0 0 1-2 2h-3.5v-6.5h-3V22H6a2 2 0 0 1-2-2v-9.5a1 1 0 0 1 .3-.7z"/></svg><span>Overview</span></a>
-  <a class="bottom-nav__item" href="transactions.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v15m0 0-3.5-3.5M7 19l3.5-3.5M17 20V5m0 0-3.5 3.5M17 5l3.5 3.5"/></svg><span>Transactions</span></a>
-  <a class="bottom-nav__item" href="budgets.html"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10h-10z"/><path d="M11 2.05A10 10 0 0 0 2.05 11H11z" opacity=".5"/></svg><span>Budgets</span></a>
-  <a class="bottom-nav__item" href="pots.html"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h12v3.5H6z" opacity=".5"/><path d="M4.5 8h15l-1.1 11.2A2 2 0 0 1 16.4 21H7.6a2 2 0 0 1-2-1.8z"/></svg><span>Pots</span></a>
-  <a class="bottom-nav__item" href="bills.html"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 2h14v20l-2.5-1.8L14 22l-2-1.8L10 22l-2.5-1.8L5 22z"/></svg><span>Recurring</span></a>
-</nav>
-
-<script src="js/api.js"></script>
-<script src="js/app.js"></script>
-<script src="js/overview-page.js"></script>
-</body>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/overview-page.js"></script>
+  </body>
 </html>
-
-

@@ -1,142 +1,446 @@
-﻿<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>finance — Pots</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pots</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="app" id="app">
+      <!-- SIDEBAR (desktop) -->
+      <aside class="sidebar">
+        <div class="sidebar__logo">finance</div>
+        <nav class="sidebar__nav">
+          <a class="nav-item" href="overview.html">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M11.3 2.3a1 1 0 0 1 1.4 0l8 7.5a1 1 0 0 1 .3.7V20a2 2 0 0 1-2 2h-3.5v-6.5h-3V22H6a2 2 0 0 1-2-2v-9.5a1 1 0 0 1 .3-.7z"
+              />
+            </svg>
+            <span>Overview</span>
+          </a>
+          <a class="nav-item" href="transactions.html">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M7 4v15m0 0-3.5-3.5M7 19l3.5-3.5M17 20V5m0 0-3.5 3.5M17 5l3.5 3.5"
+              />
+            </svg>
+            <span>Transactions</span>
+          </a>
+          <a class="nav-item" href="budgets.html">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2a10 10 0 1 0 10 10h-10z" />
+              <path d="M11 2.05A10 10 0 0 0 2.05 11H11z" opacity=".5" />
+            </svg>
+            <span>Budgets</span>
+          </a>
+          <a class="nav-item is-active" href="pots.html">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M6 3h12v3.5H6z" opacity=".5" />
+              <path
+                d="M4.5 8h15l-1.1 11.2A2 2 0 0 1 16.4 21H7.6a2 2 0 0 1-2-1.8z"
+              />
+            </svg>
+            <span>Pots</span>
+          </a>
+          <a class="nav-item" href="bills.html">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M5 2h14v20l-2.5-1.8L14 22l-2-1.8L10 22l-2.5-1.8L5 22z" />
+            </svg>
+            <span>Recurring bills</span>
+          </a>
+        </nav>
+        <div class="sidebar__footer">
+          <a href="#" class="sidebar__link" data-logout>
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"
+              />
+            </svg>
+            <span>Log out</span>
+          </a>
+          <button class="minimize-btn">
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M15 6 9 12l6 6" />
+            </svg>
+            <span>Minimize Menu</span>
+          </button>
+        </div>
+      </aside>
 
-<div class="app" id="app">
-
-  <!-- SIDEBAR (desktop) -->
-  <aside class="sidebar">
-    <div class="sidebar__logo">finance</div>
-    <nav class="sidebar__nav">
-      <a class="nav-item" href="overview.html">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.3 2.3a1 1 0 0 1 1.4 0l8 7.5a1 1 0 0 1 .3.7V20a2 2 0 0 1-2 2h-3.5v-6.5h-3V22H6a2 2 0 0 1-2-2v-9.5a1 1 0 0 1 .3-.7z"/></svg>
-        <span>Overview</span>
-      </a>
-      <a class="nav-item" href="transactions.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v15m0 0-3.5-3.5M7 19l3.5-3.5M17 20V5m0 0-3.5 3.5M17 5l3.5 3.5"/></svg>
-        <span>Transactions</span>
-      </a>
-      <a class="nav-item" href="budgets.html">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10h-10z"/><path d="M11 2.05A10 10 0 0 0 2.05 11H11z" opacity=".5"/></svg>
-        <span>Budgets</span>
-      </a>
-      <a class="nav-item is-active" href="pots.html">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h12v3.5H6z" opacity=".5"/><path d="M4.5 8h15l-1.1 11.2A2 2 0 0 1 16.4 21H7.6a2 2 0 0 1-2-1.8z"/></svg>
-        <span>Pots</span>
-      </a>
-      <a class="nav-item" href="bills.html">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 2h14v20l-2.5-1.8L14 22l-2-1.8L10 22l-2.5-1.8L5 22z"/></svg>
-        <span>Recurring bills</span>
-      </a>
-    </nav>
-    <div class="sidebar__footer">
-      <a href="#" class="sidebar__link" data-logout>
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
-        <span>Log out</span>
-      </a>
-      <button class="minimize-btn">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6 9 12l6 6"/></svg>
-        <span>Minimize Menu</span>
-      </button>
+      <!-- MAIN -->
+      <main class="main">
+        <section class="page is-active" id="page-pots">
+          <div class="topbar">
+            <h1 class="page-title">Pots</h1>
+            <div class="topbar__actions">
+              <a href="#" class="logout-top" data-logout>Log out</a
+              ><button class="btn btn--dark btn--add" data-open="modal-add-pot">
+                + Add New Pot
+              </button>
+            </div>
+          </div>
+          <div class="pots-grid" id="pots-grid"></div>
+        </section>
+      </main>
     </div>
-  </aside>
 
-  <!-- MAIN -->
-  <main class="main">
-    <section class="page is-active" id="page-pots">
-      <div class="topbar">
-        <h1 class="page-title">Pots</h1>
-        <div class="topbar__actions"><a href="#" class="logout-top" data-logout>Log out</a><button class="btn btn--dark btn--add" data-open="modal-add-pot">+ Add New Pot</button></div>
+    <!-- BOTTOM NAV (tablet / mobile) -->
+    <nav class="bottom-nav">
+      <a class="bottom-nav__item" href="overview.html"
+        ><svg viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M11.3 2.3a1 1 0 0 1 1.4 0l8 7.5a1 1 0 0 1 .3.7V20a2 2 0 0 1-2 2h-3.5v-6.5h-3V22H6a2 2 0 0 1-2-2v-9.5a1 1 0 0 1 .3-.7z"
+          /></svg
+        ><span>Overview</span></a
+      >
+      <a class="bottom-nav__item" href="transactions.html"
+        ><svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path
+            d="M7 4v15m0 0-3.5-3.5M7 19l3.5-3.5M17 20V5m0 0-3.5 3.5M17 5l3.5 3.5"
+          /></svg
+        ><span>Transactions</span></a
+      >
+      <a class="bottom-nav__item" href="budgets.html"
+        ><svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2a10 10 0 1 0 10 10h-10z" />
+          <path d="M11 2.05A10 10 0 0 0 2.05 11H11z" opacity=".5" /></svg
+        ><span>Budgets</span></a
+      >
+      <a class="bottom-nav__item is-active" href="pots.html"
+        ><svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M6 3h12v3.5H6z" opacity=".5" />
+          <path
+            d="M4.5 8h15l-1.1 11.2A2 2 0 0 1 16.4 21H7.6a2 2 0 0 1-2-1.8z"
+          /></svg
+        ><span>Pots</span></a
+      >
+      <a class="bottom-nav__item" href="bills.html"
+        ><svg viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M5 2h14v20l-2.5-1.8L14 22l-2-1.8L10 22l-2.5-1.8L5 22z"
+          /></svg
+        ><span>Recurring</span></a
+      >
+    </nav>
+
+    <!-- MODALS -->
+    <div class="modal-overlay" id="modal-add-pot" data-overlay>
+      <div class="modal">
+        <div class="modal__head">
+          <h2>Add New Pot</h2>
+          <button class="modal__close" data-close>
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="m15 9-6 6M9 9l6 6" />
+            </svg>
+          </button>
+        </div>
+        <p class="modal__desc">
+          Create a pot to set savings targets. These can help keep you on track
+          as you save for special purchases.
+        </p>
+        <label>Pot Name</label>
+        <input class="input" name="pot-name" placeholder="e.g. Rainy Days" />
+        <label>Target</label>
+        <div class="money-input">
+          <span class="dollar">$</span
+          ><input class="input" name="pot-target" placeholder="e.g. 2000" />
+        </div>
+        <label>Theme</label>
+        <select name="pot-theme">
+          <option>Green</option>
+          <option>Cyan</option>
+          <option>Yellow</option>
+          <option>Navy</option>
+          <option>Red</option>
+          <option>Purple</option>
+          <option>Turquoise</option>
+          <option>Brown</option>
+          <option>Magenta</option>
+          <option>Blue</option>
+          <option>Army Green</option>
+          <option>Gold</option>
+          <option>Orange</option>
+        </select>
+        <button
+          class="btn btn--dark btn--block"
+          id="btn-add-pot"
+          data-close
+          style="margin-top: 8px"
+        >
+          Add Pot
+        </button>
       </div>
-      <div class="pots-grid" id="pots-grid"></div>
-    </section>
-  </main>
-</div>
+    </div>
 
-<!-- BOTTOM NAV (tablet / mobile) -->
-<nav class="bottom-nav">
-  <a class="bottom-nav__item" href="overview.html"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.3 2.3a1 1 0 0 1 1.4 0l8 7.5a1 1 0 0 1 .3.7V20a2 2 0 0 1-2 2h-3.5v-6.5h-3V22H6a2 2 0 0 1-2-2v-9.5a1 1 0 0 1 .3-.7z"/></svg><span>Overview</span></a>
-  <a class="bottom-nav__item" href="transactions.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v15m0 0-3.5-3.5M7 19l3.5-3.5M17 20V5m0 0-3.5 3.5M17 5l3.5 3.5"/></svg><span>Transactions</span></a>
-  <a class="bottom-nav__item" href="budgets.html"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10h-10z"/><path d="M11 2.05A10 10 0 0 0 2.05 11H11z" opacity=".5"/></svg><span>Budgets</span></a>
-  <a class="bottom-nav__item is-active" href="pots.html"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h12v3.5H6z" opacity=".5"/><path d="M4.5 8h15l-1.1 11.2A2 2 0 0 1 16.4 21H7.6a2 2 0 0 1-2-1.8z"/></svg><span>Pots</span></a>
-  <a class="bottom-nav__item" href="bills.html"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 2h14v20l-2.5-1.8L14 22l-2-1.8L10 22l-2.5-1.8L5 22z"/></svg><span>Recurring</span></a>
-</nav>
+    <div class="modal-overlay" id="modal-edit-pot" data-overlay>
+      <div class="modal">
+        <div class="modal__head">
+          <h2>Edit Pot</h2>
+          <button class="modal__close" data-close>
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="m15 9-6 6M9 9l6 6" />
+            </svg>
+          </button>
+        </div>
+        <p class="modal__desc">
+          If your saving targets change, feel free to update your pots.
+        </p>
+        <label>Pot Name</label>
+        <input class="input" name="pot-name" placeholder="e.g. Rainy Days" />
+        <label>Target</label>
+        <div class="money-input">
+          <span class="dollar">$</span
+          ><input class="input" name="pot-target" placeholder="e.g. 2000" />
+        </div>
+        <label>Theme</label>
+        <select name="pot-theme">
+          <option>Green</option>
+          <option>Cyan</option>
+          <option>Yellow</option>
+          <option>Navy</option>
+          <option>Red</option>
+          <option>Purple</option>
+          <option>Turquoise</option>
+          <option>Brown</option>
+          <option>Magenta</option>
+          <option>Blue</option>
+          <option>Army Green</option>
+          <option>Gold</option>
+          <option>Orange</option>
+        </select>
+        <button
+          class="btn btn--dark btn--block"
+          id="btn-edit-pot"
+          data-close
+          style="margin-top: 8px"
+        >
+          Save Changes
+        </button>
+      </div>
+    </div>
+    <div
+      class="modal-overlay"
+      id="modal-add-money"
+      data-overlay
+      data-mode="add"
+    >
+      <div class="modal">
+        <div class="modal__head">
+          <h2 data-money-title>Add to 'Savings'</h2>
+          <button class="modal__close" data-close>
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="m15 9-6 6M9 9l6 6" />
+            </svg>
+          </button>
+        </div>
+        <p class="modal__desc">
+          Add money to your pot to keep it separate from your main balance. As
+          soon as you add this money, it will be deducted from your current
+          balance.
+        </p>
+        <div class="new-amount">
+          <span class="new-amount__label">New Amount</span
+          ><span class="new-amount__value" data-money-new>$159.00</span>
+        </div>
+        <div class="money-bar">
+          <div
+            class="money-bar__fill"
+            data-money-bar
+            style="width: 7.95%; background: var(--green)"
+          ></div>
+        </div>
+        <div class="money-meta">
+          <span
+            class="money-meta__pct"
+            data-money-pct
+            style="color: var(--green)"
+            >7.95%</span
+          ><span class="money-meta__target" data-money-target
+            >Target of $2,000</span
+          >
+        </div>
+        <label>Amount to Add</label>
+        <div class="money-input">
+          <span class="dollar">$</span
+          ><input
+            class="input"
+            type="number"
+            placeholder="0"
+            data-money-input
+          />
+        </div>
+        <button
+          class="btn btn--dark btn--block"
+          id="btn-confirm-add"
+          data-close
+          style="margin-top: 8px"
+        >
+          Confirm Addition
+        </button>
+      </div>
+    </div>
 
-<!-- MODALS -->
-<div class="modal-overlay" id="modal-add-pot" data-overlay>
-  <div class="modal">
-    <div class="modal__head"><h2>Add New Pot</h2><button class="modal__close" data-close><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg></button></div>
-    <p class="modal__desc">Create a pot to set savings targets. These can help keep you on track as you save for special purchases.</p>
-    <label>Pot Name</label>
-    <input class="input" name="pot-name" placeholder="e.g. Rainy Days">
-    <label>Target</label>
-    <div class="money-input"><span class="dollar">$</span><input class="input" name="pot-target" placeholder="e.g. 2000"></div>
-    <label>Theme</label>
-    <select name="pot-theme"><option>Green</option><option>Cyan</option><option>Yellow</option><option>Navy</option><option>Red</option><option>Purple</option><option>Turquoise</option><option>Brown</option><option>Magenta</option><option>Blue</option><option>Army Green</option><option>Gold</option><option>Orange</option></select>
-    <button class="btn btn--dark btn--block" id="btn-add-pot" data-close style="margin-top:8px">Add Pot</button>
-  </div>
-</div>
+    <div
+      class="modal-overlay"
+      id="modal-withdraw"
+      data-overlay
+      data-mode="withdraw"
+    >
+      <div class="modal">
+        <div class="modal__head">
+          <h2 data-money-title>Withdraw from 'Savings'</h2>
+          <button class="modal__close" data-close>
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="m15 9-6 6M9 9l6 6" />
+            </svg>
+          </button>
+        </div>
+        <p class="modal__desc">
+          Withdraw from your pot to put money back in your main balance. This
+          will reduce the amount you have in this pot.
+        </p>
+        <div class="new-amount">
+          <span class="new-amount__label">New Amount</span
+          ><span class="new-amount__value" data-money-new>$159.00</span>
+        </div>
+        <div class="money-bar">
+          <div
+            class="money-bar__fill"
+            data-money-bar
+            style="width: 7.95%; background: var(--red)"
+          ></div>
+        </div>
+        <div class="money-meta">
+          <span class="money-meta__pct" data-money-pct style="color: var(--red)"
+            >7.95%</span
+          ><span class="money-meta__target" data-money-target
+            >Target of $2,000</span
+          >
+        </div>
+        <label>Amount to Withdraw</label>
+        <div class="money-input">
+          <span class="dollar">$</span
+          ><input
+            class="input"
+            type="number"
+            placeholder="0"
+            data-money-input
+          />
+        </div>
+        <button
+          class="btn btn--dark btn--block"
+          id="btn-confirm-withdraw"
+          data-close
+          style="margin-top: 8px"
+        >
+          Confirm Withdrawal
+        </button>
+      </div>
+    </div>
 
-<div class="modal-overlay" id="modal-edit-pot" data-overlay>
-  <div class="modal">
-    <div class="modal__head"><h2>Edit Pot</h2><button class="modal__close" data-close><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg></button></div>
-    <p class="modal__desc">If your saving targets change, feel free to update your pots.</p>
-    <label>Pot Name</label>
-    <input class="input" name="pot-name" placeholder="e.g. Rainy Days">
-    <label>Target</label>
-    <div class="money-input"><span class="dollar">$</span><input class="input" name="pot-target" placeholder="e.g. 2000"></div>
-    <label>Theme</label>
-    <select name="pot-theme"><option>Green</option><option>Cyan</option><option>Yellow</option><option>Navy</option><option>Red</option><option>Purple</option><option>Turquoise</option><option>Brown</option><option>Magenta</option><option>Blue</option><option>Army Green</option><option>Gold</option><option>Orange</option></select>
-    <button class="btn btn--dark btn--block" id="btn-edit-pot" data-close style="margin-top:8px">Save Changes</button>
-  </div>
-</div>
-<div class="modal-overlay" id="modal-add-money" data-overlay data-mode="add">
-  <div class="modal">
-    <div class="modal__head"><h2 data-money-title>Add to 'Savings'</h2><button class="modal__close" data-close><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg></button></div>
-    <p class="modal__desc">Add money to your pot to keep it separate from your main balance. As soon as you add this money, it will be deducted from your current balance.</p>
-    <div class="new-amount"><span class="new-amount__label">New Amount</span><span class="new-amount__value" data-money-new>$159.00</span></div>
-    <div class="money-bar"><div class="money-bar__fill" data-money-bar style="width:7.95%;background:var(--green)"></div></div>
-    <div class="money-meta"><span class="money-meta__pct" data-money-pct style="color:var(--green)">7.95%</span><span class="money-meta__target" data-money-target>Target of $2,000</span></div>
-    <label>Amount to Add</label>
-    <div class="money-input"><span class="dollar">$</span><input class="input" type="number" placeholder="0" data-money-input></div>
-    <button class="btn btn--dark btn--block" id="btn-confirm-add" data-close style="margin-top:8px">Confirm Addition</button>
-  </div>
-</div>
+    <div class="modal-overlay" id="modal-delete-pot" data-overlay>
+      <div class="modal">
+        <div class="modal__head">
+          <h2 data-del-title>Delete 'Savings'?</h2>
+          <button class="modal__close" data-close>
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="m15 9-6 6M9 9l6 6" />
+            </svg>
+          </button>
+        </div>
+        <p class="modal__desc">
+          Are you sure you want to delete this pot? This action cannot be
+          reversed, and all the data inside it will be removed forever.
+        </p>
+        <button class="btn btn--red btn--block" id="btn-delete-pot" data-close>
+          Yes, Confirm Deletion
+        </button>
+        <button class="modal__cancel" data-close>No, Go Back</button>
+      </div>
+    </div>
 
-<div class="modal-overlay" id="modal-withdraw" data-overlay data-mode="withdraw">
-  <div class="modal">
-    <div class="modal__head"><h2 data-money-title>Withdraw from 'Savings'</h2><button class="modal__close" data-close><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg></button></div>
-    <p class="modal__desc">Withdraw from your pot to put money back in your main balance. This will reduce the amount you have in this pot.</p>
-    <div class="new-amount"><span class="new-amount__label">New Amount</span><span class="new-amount__value" data-money-new>$159.00</span></div>
-    <div class="money-bar"><div class="money-bar__fill" data-money-bar style="width:7.95%;background:var(--red)"></div></div>
-    <div class="money-meta"><span class="money-meta__pct" data-money-pct style="color:var(--red)">7.95%</span><span class="money-meta__target" data-money-target>Target of $2,000</span></div>
-    <label>Amount to Withdraw</label>
-    <div class="money-input"><span class="dollar">$</span><input class="input" type="number" placeholder="0" data-money-input></div>
-    <button class="btn btn--dark btn--block" id="btn-confirm-withdraw" data-close style="margin-top:8px">Confirm Withdrawal</button>
-  </div>
-</div>
-
-<div class="modal-overlay" id="modal-delete-pot" data-overlay>
-  <div class="modal">
-    <div class="modal__head"><h2 data-del-title>Delete 'Savings'?</h2><button class="modal__close" data-close><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg></button></div>
-    <p class="modal__desc">Are you sure you want to delete this pot? This action cannot be reversed, and all the data inside it will be removed forever.</p>
-    <button class="btn btn--red btn--block" id="btn-delete-pot" data-close>Yes, Confirm Deletion</button>
-    <button class="modal__cancel" data-close>No, Go Back</button>
-  </div>
-</div>
-
-<script src="js/api.js"></script>
-<script src="js/app.js"></script>
-<script src="js/pots-page.js"></script>
-</body>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/pots-page.js"></script>
+  </body>
 </html>
-
