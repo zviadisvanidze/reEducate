@@ -15,6 +15,26 @@ document.addEventListener("DOMContentLoaded", function () {
     orange: "--orange",
   };
 
+  apiGet("/auth/current-user").then(function (user) {
+    var initials =
+      user.avatar ||
+      String(user.name || "")
+        .trim()
+        .split(/\s+/)
+        .slice(0, 2)
+        .map(function (part) {
+          return part.charAt(0).toUpperCase();
+        })
+        .join("");
+    var profileAvatar = document.getElementById("overview-profile-avatar");
+    profileAvatar.textContent = initials || "?";
+    profileAvatar.title = user.name || "Current user";
+    profileAvatar.setAttribute(
+      "aria-label",
+      user.name ? "Current user: " + user.name : "Current user",
+    );
+  });
+
   apiGet("/overview").then(function (data) {
     if (!data) return;
 

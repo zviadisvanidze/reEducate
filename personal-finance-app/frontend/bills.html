@@ -106,7 +106,13 @@
           <div class="topbar">
             <h1 class="page-title">Recurring Bills</h1>
             <div class="topbar__actions">
-              <a href="#" class="logout-top" data-logout>Log out</a>
+              <a href="#" class="logout-top" data-logout>Log out</a
+              ><button
+                class="btn btn--dark btn--add"
+                data-open="modal-add-bill"
+              >
+                + Add New Bill
+              </button>
             </div>
           </div>
           <div class="bills-grid">
@@ -230,6 +236,135 @@
         ><span>Recurring</span></a
       >
     </nav>
+
+    <div class="modal-overlay" id="modal-add-bill" data-overlay>
+      <div class="modal">
+        <div class="modal__head">
+          <h2>Add New Bill</h2>
+          <button class="modal__close" data-close aria-label="Close">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <path d="m15 9-6 6M9 9l6 6" />
+            </svg>
+          </button>
+        </div>
+        <p class="modal__desc">
+          Add a monthly recurring payment and choose its usual due day.
+        </p>
+        <form id="add-bill-form">
+          <label for="add-bill-name">Bill name</label>
+          <input class="input" id="add-bill-name" name="name" placeholder="e.g. Netflix" maxlength="100" required />
+
+          <label for="add-bill-amount">Amount</label>
+          <div class="money-input">
+            <span class="dollar">$</span>
+            <input class="input" id="add-bill-amount" name="amount" type="number" min="0.01" step="0.01" placeholder="0.00" required />
+          </div>
+
+          <label for="add-bill-day">Monthly due day</label>
+          <input class="input" id="add-bill-day" name="dueDay" type="number" min="1" max="31" placeholder="1–31" required />
+
+          <label for="add-bill-color">Color</label>
+          <select id="add-bill-color" name="color">
+            <option value="--green">Green</option>
+            <option value="--cyan">Cyan</option>
+            <option value="--yellow">Yellow</option>
+            <option value="--navy">Navy</option>
+            <option value="--red">Red</option>
+            <option value="--purple">Purple</option>
+            <option value="--turquoise">Turquoise</option>
+            <option value="--brown">Brown</option>
+            <option value="--magenta">Magenta</option>
+            <option value="--blue">Blue</option>
+            <option value="--army">Army Green</option>
+            <option value="--gold">Gold</option>
+            <option value="--orange">Orange</option>
+          </select>
+
+          <label for="add-bill-status">Payment status</label>
+          <select id="add-bill-status" name="isPaid">
+            <option value="false">Unpaid</option>
+            <option value="true">Paid</option>
+          </select>
+
+          <p class="form-error bill-form-error" id="add-bill-error"></p>
+          <button class="btn btn--dark btn--block" type="submit" id="btn-add-bill">Add Bill</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-edit-bill" data-overlay>
+      <div class="modal">
+        <div class="modal__head">
+          <h2>Edit Bill</h2>
+          <button class="modal__close" data-close aria-label="Close">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <path d="m15 9-6 6M9 9l6 6" />
+            </svg>
+          </button>
+        </div>
+        <form id="edit-bill-form">
+          <label for="edit-bill-name">Bill name</label>
+          <input class="input" id="edit-bill-name" name="name" maxlength="100" required />
+
+          <label for="edit-bill-amount">Amount</label>
+          <div class="money-input">
+            <span class="dollar">$</span>
+            <input class="input" id="edit-bill-amount" name="amount" type="number" min="0.01" step="0.01" required />
+          </div>
+
+          <label for="edit-bill-day">Monthly due day</label>
+          <input class="input" id="edit-bill-day" name="dueDay" type="number" min="1" max="31" required />
+
+          <label for="edit-bill-color">Color</label>
+          <select id="edit-bill-color" name="color">
+            <option value="--green">Green</option>
+            <option value="--cyan">Cyan</option>
+            <option value="--yellow">Yellow</option>
+            <option value="--navy">Navy</option>
+            <option value="--red">Red</option>
+            <option value="--purple">Purple</option>
+            <option value="--turquoise">Turquoise</option>
+            <option value="--brown">Brown</option>
+            <option value="--magenta">Magenta</option>
+            <option value="--blue">Blue</option>
+            <option value="--army">Army Green</option>
+            <option value="--gold">Gold</option>
+            <option value="--orange">Orange</option>
+          </select>
+
+          <label for="edit-bill-status">Payment status</label>
+          <select id="edit-bill-status" name="isPaid">
+            <option value="false">Unpaid</option>
+            <option value="true">Paid</option>
+          </select>
+
+          <p class="form-error bill-form-error" id="edit-bill-error"></p>
+          <button class="btn btn--dark btn--block" type="submit" id="btn-edit-bill">Save Changes</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-delete-bill" data-overlay>
+      <div class="modal">
+        <div class="modal__head">
+          <h2 id="delete-bill-title">Delete this bill?</h2>
+          <button class="modal__close" data-close aria-label="Close">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <path d="m15 9-6 6M9 9l6 6" />
+            </svg>
+          </button>
+        </div>
+        <p class="modal__desc">
+          This removes the recurring bill from your account. This action cannot be undone.
+        </p>
+        <p class="form-error bill-form-error" id="delete-bill-error"></p>
+        <button class="btn btn--red btn--block" id="btn-delete-bill">Yes, Delete Bill</button>
+        <button class="modal__cancel" data-close>No, Go Back</button>
+      </div>
+    </div>
 
     <script src="js/api.js"></script>
     <script src="js/app.js"></script>

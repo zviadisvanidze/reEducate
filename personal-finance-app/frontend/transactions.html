@@ -106,9 +106,17 @@
           <div class="topbar">
             <h1 class="page-title">Transactions</h1>
             <div class="topbar__actions">
-              <a href="#" class="logout-top" data-logout>Log out</a>
+              <a href="#" class="logout-top" data-logout>Log out</a
+              ><button
+                class="btn btn--dark btn--add"
+                data-open="modal-send-money"
+                id="btn-open-send-money"
+              >
+                + Send Money
+              </button>
             </div>
           </div>
+
           <section class="card">
             <div class="toolbar">
               <div class="search">
@@ -132,6 +140,8 @@
                   ><select id="tx-sort" class="filter-select">
                     <option value="latest">Latest</option>
                     <option value="oldest">Oldest</option>
+                    <option value="received">Received</option>
+                    <option value="sent">Given</option>
                     <option value="a-z">A to Z</option>
                     <option value="z-a">Z to A</option>
                     <option value="highest">Highest</option>
@@ -210,6 +220,129 @@
         ><span>Recurring</span></a
       >
     </nav>
+
+    <div class="modal-overlay" id="modal-send-money" data-overlay>
+      <div class="modal">
+        <div class="modal__head">
+          <h2>Send Money</h2>
+          <button class="modal__close" data-close aria-label="Close">
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="m15 9-6 6M9 9l6 6" />
+            </svg>
+          </button>
+        </div>
+        <p class="modal__desc" id="send-money-description">
+          Enter the receiver’s account email. The transfer will appear
+          immediately for both users.
+        </p>
+
+        <div class="send-balance">
+          <span>Your available balance</span>
+          <strong id="modal-tx-balance">...</strong>
+        </div>
+
+        <form id="send-money-form">
+          <label for="transaction-type">Payment type</label>
+          <select id="transaction-type" name="transactionType">
+            <option value="user">App user</option>
+            <option value="merchant">Shop or service</option>
+          </select>
+
+          <div id="receiver-email-wrap">
+            <label for="receiver-email">Receiver email</label>
+            <input
+              class="input"
+              id="receiver-email"
+              name="receiverEmail"
+              type="email"
+              placeholder="name@example.com"
+              autocomplete="email"
+              required
+            />
+          </div>
+
+          <div id="merchant-name-wrap" hidden>
+            <label for="merchant-name">Shop or service name</label>
+            <input
+              class="input"
+              id="merchant-name"
+              name="counterpartyName"
+              maxlength="100"
+              placeholder="e.g. Lotus Spa"
+            />
+          </div>
+
+          <label for="transaction-amount">Amount</label>
+          <div class="money-input">
+            <span class="dollar">$</span>
+            <input
+              class="input"
+              id="transaction-amount"
+              name="amount"
+              type="number"
+              min="0.01"
+              step="0.01"
+              placeholder="0.00"
+              required
+            />
+          </div>
+
+          <label for="transaction-category">Category</label>
+          <select id="transaction-category" name="categoryChoice">
+            <option value="Entertainment">Entertainment</option>
+            <option value="Bills">Bills</option>
+            <option value="Groceries">Groceries</option>
+            <option value="Dining Out">Dining Out</option>
+            <option value="Transportation">Transportation</option>
+            <option value="Personal Care">Personal Care</option>
+            <option value="Education">Education</option>
+            <option value="Shopping">Shopping</option>
+            <option value="General">General</option>
+            <option value="custom">Other</option>
+          </select>
+          <div id="custom-category-wrap" hidden>
+            <label for="custom-transaction-category">Custom category</label>
+            <input
+              class="input"
+              id="custom-transaction-category"
+              name="customCategory"
+              maxlength="50"
+              placeholder="e.g. Pet Care"
+            />
+          </div>
+
+          <label for="transaction-color">Color</label>
+          <select id="transaction-color" name="color">
+            <option value="--green">Green</option>
+            <option value="--cyan">Cyan</option>
+            <option value="--yellow">Yellow</option>
+            <option value="--navy">Navy</option>
+            <option value="--red">Red</option>
+            <option value="--purple">Purple</option>
+            <option value="--turquoise">Turquoise</option>
+            <option value="--brown">Brown</option>
+            <option value="--magenta">Magenta</option>
+            <option value="--blue">Blue</option>
+            <option value="--army">Army Green</option>
+            <option value="--gold">Gold</option>
+            <option value="--orange">Orange</option>
+          </select>
+
+          <p class="form-error transaction-form-error" id="send-money-error"></p>
+          <button class="btn btn--dark btn--block" id="btn-send-money" type="submit">
+            Send Money
+          </button>
+        </form>
+      </div>
+    </div>
 
     <script src="js/api.js"></script>
     <script src="js/app.js"></script>

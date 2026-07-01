@@ -54,13 +54,20 @@ const updatePot = async (req, res) => {
 
 const deletePot = async (req, res) => {
   try {
-    const pot = await potService.deletePot({ userId: req.userId, id: req.params.id });
+    const result = await potService.deletePot({
+      userId: req.userId,
+      id: req.params.id,
+    });
 
-    if (!pot) {
+    if (!result) {
       return res.status(404).json({ message: "Pot not found" });
     }
 
-    res.json({ message: "Pot deleted successfully" });
+    res.json({
+      message: "Pot deleted and saved money returned to balance",
+      refundedAmount: result.refundedAmount,
+      balance: result.balance,
+    });
   } catch (err) {
     res.status(500).json({ message: "Server error" });
   }

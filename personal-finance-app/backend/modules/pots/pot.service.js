@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const Pot = require("./pot.model");
 const User = require("../auth/auth.model");
 
@@ -17,8 +18,38 @@ exports.updatePot = ({ userId, id, name, target, theme }) => {
   );
 };
 
-exports.deletePot = ({ userId, id }) => {
-  return Pot.findOneAndDelete({ _id: id, userId });
+exports.deletePot = async ({ userId, id }) => {
+  const session = await mongoose.startSession();
+  let result = null;
+
+  try {
+    await session.withTransaction(async () => {
+      const pot = await Pot.findOne({ _id: id, userId }).session(session);
+      if (!pot) {
+        return;
+      }
+
+      const user = await User.findByIdAndUpdate(
+        userId,
+        { $inc: { balance: pot.saved } },
+        { session, returnDocument: "after" },
+      );
+      if (!user) {
+        throw new Error("User not found while deleting pot");
+      }
+
+      await Pot.deleteOne({ _id: pot._id, userId }, { session });
+      result = {
+        pot,
+        refundedAmount: pot.saved,
+        balance: user.balance,
+      };
+    });
+
+    return result;
+  } finally {
+    await session.endSession();
+  }
 };
 
 exports.addMoney = async ({ userId, id, amount }) => {

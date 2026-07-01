@@ -3,6 +3,7 @@ const Transaction = require("../transactions/transaction.model");
 const Budget = require("../budgets/budget.model");
 const Pot = require("../pots/pot.model");
 const Bill = require("../bills/bill.model");
+const { isDueSoon } = require("../bills/bill.service");
 
 exports.getOverview = async (userId) => {
   const currentUserId = userId.toString();
@@ -42,11 +43,28 @@ exports.getOverview = async (userId) => {
       const senderId = populatedId(item.senderId);
       const isSender = senderId && senderId.toString() === currentUserId;
       const otherUser = isSender ? item.receiverId : item.senderId;
+      const isMerchant = item.transactionType === "merchant";
+      const merchantAvatar = isMerchant
+        ? item.counterpartyName
+            .trim()
+            .split(/\s+/)
+            .slice(0, 2)
+            .map((part) => part.charAt(0).toUpperCase())
+            .join("")
+        : "";
 
       return {
         _id: item._id,
-        name: otherUser && otherUser.name ? otherUser.name : "Unknown user",
-        avatar: otherUser && otherUser.avatar ? otherUser.avatar : "",
+        name: isMerchant
+          ? item.counterpartyName
+          : otherUser && otherUser.name
+            ? otherUser.name
+            : "Unknown user",
+        avatar: isMerchant
+          ? merchantAvatar
+          : otherUser && otherUser.avatar
+            ? otherUser.avatar
+            : "",
         amount: isSender ? -Math.abs(item.amount) : Math.abs(item.amount),
         category: item.category,
         date: item.date,
@@ -87,7 +105,6 @@ exports.getOverview = async (userId) => {
   );
 
   const bills = await Bill.find({ userId });
-  const today = new Date().getDate();
 
   let billsPaid = 0;
   let billsUpcoming = 0;
@@ -96,7 +113,7 @@ exports.getOverview = async (userId) => {
   bills.forEach((bill) => {
     if (bill.isPaid) {
       billsPaid += bill.amount;
-    } else if (bill.dueDay <= today + 7 && bill.dueDay >= today) {
+    } else if (isDueSoon(bill.dueDay)) {
       billsDueSoon += bill.amount;
     } else {
       billsUpcoming += bill.amount;

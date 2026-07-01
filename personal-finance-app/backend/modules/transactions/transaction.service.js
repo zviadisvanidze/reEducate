@@ -1,19 +1,55 @@
-const mongoose = require("mongoose");
 const Transaction = require("./transaction.model");
 const User = require("../auth/auth.model");
 
+const initials = (name) =>
+  name
+    .trim()
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((part) => part.charAt(0).toUpperCase())
+    .join("");
+
+const transactionTimestamp = (transaction) => {
+  const date = new Date(transaction.date);
+  if (Number.isFinite(date.getTime())) {
+    return date;
+  }
+
+  if (transaction._id && typeof transaction._id.getTimestamp === "function") {
+    return transaction._id.getTimestamp();
+  }
+
+  return new Date(0);
+};
+
 const formatTransaction = (transaction, currentUserId) => {
   const item = transaction.toObject();
+  const hasRecordedDate =
+    typeof transaction.$isDefault !== "function" ||
+    !transaction.$isDefault("date");
   const senderId = item.senderId && (item.senderId._id || item.senderId);
   const isSender = senderId && senderId.toString() === currentUserId;
   const otherUser = isSender ? item.receiverId : item.senderId;
+  const isMerchant = item.transactionType === "merchant";
 
   return {
     ...item,
-    name: otherUser && otherUser.name ? otherUser.name : "Unknown user",
-    avatar: otherUser && otherUser.avatar ? otherUser.avatar : "",
+    name: isMerchant
+      ? item.counterpartyName
+      : otherUser && otherUser.name
+        ? otherUser.name
+        : "Unknown user",
+    avatar: isMerchant
+      ? initials(item.counterpartyName || "?")
+      : otherUser && otherUser.avatar
+        ? otherUser.avatar
+        : "",
     type: isSender ? "sent" : "received",
     displayAmount: isSender ? -item.amount : item.amount,
+    date: hasRecordedDate
+      ? transactionTimestamp(item)
+      : transactionTimestamp({ _id: item._id }),
+    hasRecordedDate,
   };
 };
 
@@ -43,9 +79,37 @@ exports.getTransactions = async ({ userId, query }) => {
     );
   }
 
+  if (sort === "received") {
+    transactions = transactions.filter(
+      (transaction) => transaction.type === "received",
+    );
+  } else if (sort === "sent") {
+    transactions = transactions.filter(
+      (transaction) => transaction.type === "sent",
+    );
+  }
+
+  const newestFirst = (a, b) => {
+    if (a.hasRecordedDate !== b.hasRecordedDate) {
+      return Number(b.hasRecordedDate) - Number(a.hasRecordedDate);
+    }
+    const dateDifference =
+      transactionTimestamp(b).getTime() - transactionTimestamp(a).getTime();
+    return dateDifference || b._id.toString().localeCompare(a._id.toString());
+  };
+
+  const oldestFirst = (a, b) => {
+    if (a.hasRecordedDate !== b.hasRecordedDate) {
+      return Number(a.hasRecordedDate) - Number(b.hasRecordedDate);
+    }
+    const dateDifference =
+      transactionTimestamp(a).getTime() - transactionTimestamp(b).getTime();
+    return dateDifference || a._id.toString().localeCompare(b._id.toString());
+  };
+
   switch (sort) {
     case "oldest":
-      transactions.sort((a, b) => new Date(a.date) - new Date(b.date));
+      transactions.sort(oldestFirst);
       break;
     case "a-z":
       transactions.sort((a, b) => a.name.localeCompare(b.name));
@@ -59,8 +123,12 @@ exports.getTransactions = async ({ userId, query }) => {
     case "lowest":
       transactions.sort((a, b) => a.amount - b.amount);
       break;
+    case "received":
+    case "sent":
+      transactions.sort(newestFirst);
+      break;
     default:
-      transactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+      transactions.sort(newestFirst);
   }
 
   const total = transactions.length;
@@ -76,17 +144,38 @@ exports.getTransactions = async ({ userId, query }) => {
   };
 };
 
-exports.createTransaction = async ({ senderId, receiverId, category, amount, color }) => {
-  if (!receiverId || !category || amount === undefined) {
+exports.createTransaction = async ({
+  senderId,
+  transactionType,
+  receiverEmail,
+  counterpartyName,
+  category,
+  amount,
+  color,
+}) => {
+  if (
+    !transactionType ||
+    !category ||
+    amount === undefined ||
+    !color ||
+    (transactionType === "user" && !receiverEmail) ||
+    (transactionType === "merchant" && !counterpartyName)
+  ) {
     return "MISSING_FIELDS";
   }
 
-  if (!mongoose.Types.ObjectId.isValid(receiverId)) {
-    return "INVALID_RECEIVER";
-  }
+  let receiver = null;
+  if (transactionType === "user") {
+    receiver = await User.findOne({
+      email: receiverEmail.trim().toLowerCase(),
+    });
+    if (!receiver) {
+      return "RECEIVER_NOT_FOUND";
+    }
 
-  if (receiverId === senderId.toString()) {
-    return "SELF_TRANSFER";
+    if (receiver._id.toString() === senderId.toString()) {
+      return "SELF_TRANSFER";
+    }
   }
 
   const numericAmount = Number(amount);
@@ -97,7 +186,7 @@ exports.createTransaction = async ({ senderId, receiverId, category, amount, col
   const sender = await User.findOneAndUpdate(
     { _id: senderId, balance: { $gte: numericAmount } },
     { $inc: { balance: -numericAmount } },
-    { new: true },
+    { returnDocument: "after" },
   );
 
   if (!sender) {
@@ -105,21 +194,28 @@ exports.createTransaction = async ({ senderId, receiverId, category, amount, col
     return senderExists ? "INSUFFICIENT_BALANCE" : "SENDER_NOT_FOUND";
   }
 
-  const receiver = await User.findByIdAndUpdate(
-    receiverId,
-    { $inc: { balance: numericAmount } },
-    { new: true },
-  );
+  if (transactionType === "user") {
+    const updatedReceiver = await User.findByIdAndUpdate(
+      receiver._id,
+      { $inc: { balance: numericAmount } },
+      { returnDocument: "after" },
+    );
 
-  if (!receiver) {
-    await User.findByIdAndUpdate(senderId, { $inc: { balance: numericAmount } });
-    return "RECEIVER_NOT_FOUND";
+    if (!updatedReceiver) {
+      await User.findByIdAndUpdate(senderId, {
+        $inc: { balance: numericAmount },
+      });
+      return "RECEIVER_NOT_FOUND";
+    }
   }
 
   try {
     const transaction = await Transaction.create({
       senderId,
-      receiverId,
+      receiverId: receiver ? receiver._id : undefined,
+      transactionType,
+      counterpartyName:
+        transactionType === "merchant" ? counterpartyName : undefined,
       category,
       amount: numericAmount,
       color,
@@ -130,7 +226,11 @@ exports.createTransaction = async ({ senderId, receiverId, category, amount, col
       .populate("receiverId", "name avatar balance");
   } catch (err) {
     await User.findByIdAndUpdate(senderId, { $inc: { balance: numericAmount } });
-    await User.findByIdAndUpdate(receiverId, { $inc: { balance: -numericAmount } });
+    if (receiver) {
+      await User.findByIdAndUpdate(receiver._id, {
+        $inc: { balance: -numericAmount },
+      });
+    }
     throw err;
   }
 };

@@ -1,4 +1,21 @@
 ﻿/* ---------- Overview ---------- */
+.profile-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border: 3px solid var(--white);
+  border-radius: 50%;
+  background: var(--grey-900);
+  box-shadow: 0 0 0 1px var(--beige-500);
+  color: var(--white);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  user-select: none;
+}
+
 .stack {
   display: flex;
   flex-direction: column;
@@ -169,6 +186,12 @@
   color: var(--grey-500);
   margin-top: 2px;
 }
+.budget-chart .donut::before {
+  inset: 12%;
+}
+.budget-chart .donut__hole {
+  inset: 18%;
+}
 .donut-data {
   background: conic-gradient(
     var(--green) 0 5.13%,
@@ -224,4 +247,3 @@
   font-size: 14px;
   font-weight: 700;
 }
-

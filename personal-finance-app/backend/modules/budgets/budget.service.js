@@ -1,6 +1,14 @@
 const Budget = require("./budget.model");
 const Transaction = require("../transactions/transaction.model");
 
+const initials = (name) =>
+  name
+    .trim()
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((part) => part.charAt(0).toUpperCase())
+    .join("");
+
 exports.getBudgets = async (userId) => {
   const budgets = await Budget.find({ userId });
 
@@ -20,15 +28,26 @@ exports.getBudgets = async (userId) => {
 
       const spent = transactions.reduce((sum, t) => sum + Math.abs(t.amount), 0);
 
-      const latestSpending = transactions.slice(0, 3).map((transaction) => ({
-        _id: transaction._id,
-        name: transaction.receiverId ? transaction.receiverId.name : "Unknown user",
-        avatar: transaction.receiverId ? transaction.receiverId.avatar : "",
-        amount: -Math.abs(transaction.amount),
-        category: transaction.category,
-        date: transaction.date,
-        color: transaction.color,
-      }));
+      const latestSpending = transactions.slice(0, 3).map((transaction) => {
+        const isMerchant = transaction.transactionType === "merchant";
+        return {
+          _id: transaction._id,
+          name: isMerchant
+            ? transaction.counterpartyName
+            : transaction.receiverId
+              ? transaction.receiverId.name
+              : "Unknown user",
+          avatar: isMerchant
+            ? initials(transaction.counterpartyName)
+            : transaction.receiverId
+              ? transaction.receiverId.avatar
+              : "",
+          amount: -Math.abs(transaction.amount),
+          category: transaction.category,
+          date: transaction.date,
+          color: transaction.color,
+        };
+      });
 
       return {
         _id: budget._id,

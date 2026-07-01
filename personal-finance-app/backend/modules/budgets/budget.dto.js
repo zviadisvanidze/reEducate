@@ -6,7 +6,12 @@ const themes = [
 ];
 
 const budgetDto = z.object({
-  category: z.string().trim().min(1).max(50),
+  category: z
+    .string()
+    .trim()
+    .min(1)
+    .max(50)
+    .transform((category) => category.replace(/\s+/g, " ")),
   maximum: z.coerce.number().finite().positive(),
   theme: z.enum(themes),
 });

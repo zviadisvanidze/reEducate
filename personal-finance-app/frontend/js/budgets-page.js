@@ -52,6 +52,25 @@
     );
   }
 
+  function updateCustomCategory(modal) {
+    var select = modal.querySelector('[name="category"]');
+    var wrapper = modal.querySelector("[data-custom-budget-category]");
+    var input = modal.querySelector('[name="customCategory"]');
+    var isCustom = select.value === "custom";
+    wrapper.hidden = !isCustom;
+    input.required = isCustom;
+  }
+
+  function selectedCategory(modal) {
+    var select = modal.querySelector('[name="category"]');
+    return select.value === "custom"
+      ? modal
+          .querySelector('[name="customCategory"]')
+          .value.trim()
+          .replace(/\s+/g, " ")
+      : select.value;
+  }
+
   function load() {
     apiGet("/budgets").then(function (data) {
       if (!data) return;
@@ -167,7 +186,7 @@
     .getElementById("btn-add-budget")
     .addEventListener("click", function () {
       var modal = document.getElementById("modal-add-budget");
-      var cat = modal.querySelector('[name="category"]').value;
+      var cat = selectedCategory(modal);
       var max = parseFloat(modal.querySelector('[name="maximum"]').value);
       var theme = themeValue(modal.querySelector('[name="theme"]').value);
       if (!cat || !max || !theme) return;
@@ -183,8 +202,18 @@
     if (openEdit && openEdit.dataset.budgetId) {
       var modal = document.getElementById("modal-edit-budget");
       modal.dataset.budgetId = openEdit.dataset.budgetId;
-      modal.querySelector('[name="category"]').value =
-        openEdit.dataset.budgetCat || "";
+      var category = openEdit.dataset.budgetCat || "";
+      var categorySelect = modal.querySelector('[name="category"]');
+      var hasCategory = Array.from(categorySelect.options).some(function (
+        option,
+      ) {
+        return option.value === category;
+      });
+      categorySelect.value = hasCategory ? category : "custom";
+      modal.querySelector('[name="customCategory"]').value = hasCategory
+        ? ""
+        : category;
+      updateCustomCategory(modal);
       modal.querySelector('[name="maximum"]').value =
         openEdit.dataset.budgetMax || "";
       modal.querySelector('[name="theme"]').value = themeLabel(
@@ -196,7 +225,7 @@
     if (editBtn) {
       var editModal = document.getElementById("modal-edit-budget");
       var id = editModal.dataset.budgetId;
-      var cat = editModal.querySelector('[name="category"]').value;
+      var cat = selectedCategory(editModal);
       var max = parseFloat(editModal.querySelector('[name="maximum"]').value);
       var theme = themeValue(editModal.querySelector('[name="theme"]').value);
       if (id && cat && max && theme) {
@@ -227,6 +256,16 @@
         openDel.dataset.budgetId;
     }
   });
+
+  document
+    .querySelectorAll(
+      '#modal-add-budget [name="category"], #modal-edit-budget [name="category"]',
+    )
+    .forEach(function (select) {
+      select.addEventListener("change", function () {
+        updateCustomCategory(this.closest(".modal-overlay"));
+      });
+    });
 
   document.querySelectorAll("[data-logout]").forEach(function (btn) {
     btn.addEventListener("click", function (e) {

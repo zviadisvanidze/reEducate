@@ -10,7 +10,24 @@ const transactionSchema = new mongoose.Schema({
   receiverId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
+    required: function () {
+      return this.transactionType === "user";
+    },
+  },
+
+  transactionType: {
+    type: String,
+    enum: ["user", "merchant"],
+    default: "user",
     required: true,
+  },
+
+  counterpartyName: {
+    type: String,
+    trim: true,
+    required: function () {
+      return this.transactionType === "merchant";
+    },
   },
 
   category: {

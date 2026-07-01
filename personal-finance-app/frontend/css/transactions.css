@@ -1,4 +1,25 @@
 ﻿/* ---------- Transactions page ---------- */
+.send-balance {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  background: var(--beige-100);
+  color: var(--grey-500);
+  font-size: 13px;
+}
+.send-balance strong {
+  color: var(--grey-900);
+  font-size: 18px;
+}
+.transaction-form-error {
+  min-height: 20px;
+  margin: -4px 0 12px;
+}
+
 .toolbar {
   display: flex;
   align-items: center;
@@ -58,7 +79,7 @@
   padding: 10px 14px;
   font-size: 14px;
   cursor: pointer;
-  background: var(--white);
+  background-color: var(--white);
   color: var(--grey-900);
   font-family: inherit;
 }
@@ -85,6 +106,24 @@
 }
 .table-row:last-child {
   border-bottom: none;
+}
+.transactions-empty {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 8px;
+  padding: 48px 20px;
+  color: var(--grey-500);
+  text-align: center;
+}
+.transactions-empty strong {
+  color: var(--grey-900);
+  font-size: 16px;
+}
+.transactions-empty span {
+  max-width: 390px;
+  font-size: 13px;
+  line-height: 1.5;
 }
 .table-row__who {
   display: flex;
@@ -152,4 +191,3 @@
   color: var(--white);
   border-color: var(--grey-900);
 }
-
