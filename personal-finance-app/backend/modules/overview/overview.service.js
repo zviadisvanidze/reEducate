@@ -3,6 +3,7 @@ const Transaction = require("../transactions/transaction.model");
 const Budget = require("../budgets/budget.model");
 const Pot = require("../pots/pot.model");
 const Bill = require("../bills/bill.model");
+const { isDueSoon } = require("../bills/bill.service");
 
 exports.getOverview = async (userId) => {
   const currentUserId = userId.toString();
@@ -87,7 +88,6 @@ exports.getOverview = async (userId) => {
   );
 
   const bills = await Bill.find({ userId });
-  const today = new Date().getDate();
 
   let billsPaid = 0;
   let billsUpcoming = 0;
@@ -96,7 +96,7 @@ exports.getOverview = async (userId) => {
   bills.forEach((bill) => {
     if (bill.isPaid) {
       billsPaid += bill.amount;
-    } else if (bill.dueDay <= today + 7 && bill.dueDay >= today) {
+    } else if (isDueSoon(bill.dueDay)) {
       billsDueSoon += bill.amount;
     } else {
       billsUpcoming += bill.amount;

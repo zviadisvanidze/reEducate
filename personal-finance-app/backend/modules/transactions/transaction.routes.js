@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const isAuthMiddleware = require("../middlewares/is-auth.middleware");
+const validate = require("../middlewares/validate");
+const { createTransactionDto } = require("./transaction.dto");
 
 const {
   getTransactions,
@@ -9,6 +11,6 @@ const {
 
 router.use(isAuthMiddleware);
 router.get("/", getTransactions);
-router.post("/", createTransaction);
+router.post("/", validate(createTransactionDto), createTransaction);
 
 module.exports = router;

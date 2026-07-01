@@ -110,4 +110,49 @@
 .bill-amt--soon {
   color: var(--red);
 }
+.bill-row__amount-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+.bill-row__amount-actions .menu-wrap {
+  flex: none;
+}
+.bill-row__amount-actions .kebab {
+  padding: 6px 8px;
+}
+.bill-row__amount-actions .menu {
+  right: 0;
+  left: auto;
+  min-width: 150px;
+}
+.bills-empty {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 8px;
+  padding: 48px 20px;
+  color: var(--grey-500);
+  text-align: center;
+}
+.bills-empty strong {
+  color: var(--grey-900);
+  font-size: 16px;
+}
+.bills-empty span {
+  max-width: 360px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.bill-form-error {
+  min-height: 20px;
+  margin: -4px 0 12px;
+}
 
+@media (max-width: 699px) {
+  .bill-row__amount-actions {
+    grid-area: amt;
+    gap: 6px;
+  }
+}

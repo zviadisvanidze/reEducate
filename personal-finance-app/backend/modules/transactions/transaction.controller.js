@@ -22,12 +22,8 @@ const createTransaction = async (req, res) => {
 
     if (result === "MISSING_FIELDS") {
       return res.status(400).json({
-        message: "Required fields: receiverId, category, amount",
+        message: "Required fields: receiverEmail, category, amount, color",
       });
-    }
-
-    if (result === "INVALID_RECEIVER") {
-      return res.status(400).json({ message: "Invalid receiverId" });
     }
 
     if (result === "SELF_TRANSFER") {
